@@ -1,5 +1,4 @@
-import NotePreview from '@/components/NotePreview/NotePreview';
-
+import NotePreviewClient from './NotePreview.client';
 interface InterceptedModalPageProps {
     params: Promise<{
         id: string;
@@ -11,5 +10,5 @@ export default async function InterceptedModalPage({
 }: InterceptedModalPageProps) {
     const resolvedParams = await params;
 
-    return <NotePreview id={resolvedParams.id} />;
+    return <NotePreviewClient id={resolvedParams.id} />;
 }
