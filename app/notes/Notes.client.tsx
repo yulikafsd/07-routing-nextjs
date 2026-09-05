@@ -19,7 +19,7 @@ import { useNotes } from '@/hooks/useNotes';
 import type { Note } from '@/types/note';
 
 /* Styles */
-import css from './Notes.module.css';
+import css from './NotesPage.module.css';
 
 export default function NotesClient() {
     const [search, setSearch] = useState<string>('');
