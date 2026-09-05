@@ -1,6 +1,6 @@
 'use client';
 
-import css from '@/app/notes/NotesPage.module.css';
+import css from './NotesPage.module.css';
 
 type Props = {
     error: Error;

@@ -19,7 +19,7 @@ import { useNotes } from '@/hooks/useNotes';
 import type { Note, NoteTag } from '@/types/note';
 
 /* Styles */
-import css from '@/app/notes/NotesPage.module.css';
+import css from './NotesPage.module.css';
 
 interface NotesClientProps {
     tag?: NoteTag;
