@@ -23,17 +23,19 @@ export const metadata: Metadata = {
     description: 'Created by Yuliia Zahorovska',
 };
 
-export default function RootLayout({
-    children,
-}: {
+interface RootLayoutProps {
     children: React.ReactNode;
-}) {
+    modal: React.ReactNode;
+}
+
+export default function RootLayout({ children, modal }: RootLayoutProps) {
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable}`}>
                 <TanStackProvider>
                     <Header />
                     <main>{children}</main>
+                    {modal}
                     <Footer />
                 </TanStackProvider>
             </body>
