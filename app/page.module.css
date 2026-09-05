@@ -24,6 +24,17 @@
     margin-bottom: 16px;
 }
 
+.link {
+    font-size: 18px;
+    font-style: bold;
+    text-decoration: underline;
+    color: #444444;
+}
+
+.link:hover {
+    color: #000000;
+}
+
 .loader {
     font-size: 16px;
     text-align: center;

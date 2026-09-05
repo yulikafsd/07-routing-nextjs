@@ -1,4 +1,3 @@
-// 👇 ЗМІНА: Пряма реалізація розмітки Кроку 2 з підключенням стилів
 import css from './page.module.css';
 
 export default function HomePage() {
