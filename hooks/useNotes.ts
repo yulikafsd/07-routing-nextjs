@@ -9,7 +9,7 @@ import type { NoteTag, NewNote } from '../types/note';
 
 export function useNotes(search: string = '', page: number = 1, tag?: NoteTag) {
     return useQuery({
-        queryKey: ['notes', search, page, tag ?? 'Todo'],
+        queryKey: ['notes', search, page, tag ?? ''],
         queryFn: () => fetchNotes(search, page, tag),
         placeholderData: keepPreviousData,
     });

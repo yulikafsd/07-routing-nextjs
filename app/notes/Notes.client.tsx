@@ -16,17 +16,21 @@ import Loading from '../loading';
 
 /* Types and services */
 import { useNotes } from '@/hooks/useNotes';
-import type { Note } from '@/types/note';
+import type { Note, NoteTag } from '@/types/note';
 
 /* Styles */
 import css from './NotesPage.module.css';
 
-export default function NotesClient() {
+interface NotesClientProps {
+    tag?: NoteTag;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
     const [search, setSearch] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const { data, isFetching, isError } = useNotes(search, currentPage);
+    const { data, isFetching, isError } = useNotes(search, currentPage, tag);
 
     const notes: Note[] = data?.notes || [];
     const totalPages: number = data?.totalPages || 0;
