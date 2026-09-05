@@ -1,6 +1,6 @@
 # NoteHub Application
 
-A responsive multi-page web application built with Next.js (App Router), TypeScript, and TanStack Query that allows users to manage personal notes, search by keywords, paginate through records, create notes with validation, and view detailed note pages.
+A responsive multi-page web application built with Next.js (App Router), TypeScript, and TanStack Query that allows users to manage personal notes, search by keywords, filter by categories using parallel routes, paginate through records, create notes with validation, and preview details using intercepted modal routes.
 
 ## 🚀 Live Demo
 
@@ -8,8 +8,8 @@ A responsive multi-page web application built with Next.js (App Router), TypeScr
 
 ## 🛠️ Tech Stack & Tools
 
-- **Next.js 15+ (App Router)** — React framework for server rendering and routing
-- **React 19** — UI library
+- **Next.js (App Router)** — React framework for server rendering, parallel and intercepted routing
+- **React** — UI library
 - **@tanstack/react-query** — Server-state management, SSR hydration, and data caching
 - **TypeScript** — Static typing
 - **Axios** — Promise-based HTTP client for API requests
@@ -21,12 +21,15 @@ A responsive multi-page web application built with Next.js (App Router), TypeScr
 
 ## ✨ Features
 
-- **Multi-page Routing & SSR**: Built using Next.js App Router (`/`, `/notes`, `/notes/[id]`).
-- **Server Prefetch & Hydration**: Prefetches initial note queries on the server via `prefetchQuery` and `HydrationBoundary` for fast initial loads without loading spinners.
+- **Advanced Routing & SSR**: Built using Next.js App Router with parallel routes, catch-all routing, and intercepting routes.
+- **Tag Filtering (Parallel Routes)**: Filter notes by categories (`/notes/filter/[...slug]`) with a persistent dynamic sidebar rendered via the `@sidebar` parallel slot without full page reloads.
+- **Modal Preview (Intercepting Routes)**: Intercepts `/notes/[id]` navigation to display note details in a modal dialog (`@modal/(.)notes/[id]`) over the current page while preserving the full-page view on direct link access or page reload.
+- **Custom 404 Page**: Handled via `not-found.tsx` for non-existent routes.
+- **Server Prefetch & Hydration**: Prefetches initial note queries on the server via `prefetchQuery` and `HydrationBoundary` for fast initial loads without layout shifts.
 - **Search & Debounce**: Real-time keyword search with debounced query updates.
 - **Pagination**: Server-side page navigation with `keepPreviousData` from TanStack Query.
 - **Form Validation & Creation**: Modal form with Formik and Yup schema validation for title, content, and category tags.
-- **Dynamic Note Details**: Dedicated dynamic page (`/notes/[id]`) for viewing full note metadata and content.
+- **Dynamic Note Details**: Dedicated dynamic page (`/notes/[id]`) for direct navigation.
 - **State Management & Invalidation**: Automatic cache invalidation upon creating or deleting notes.
 - **Error & Loading States**: Native Next.js `loading.tsx` and `error.tsx` handlers for graceful fallback states.
 - **Secure Environment Variables**: Handles API authentication via `NEXT_PUBLIC_NOTEHUB_TOKEN`.
@@ -35,21 +38,35 @@ A responsive multi-page web application built with Next.js (App Router), TypeScr
 
 ```text
 ├── app/
+│   ├── @modal/
+│   │   ├── default.tsx
+│   │   └── (.)notes/
+│   │       └── [id]/
+│   │           ├── NotePreview.client.tsx
+│   │           └── page.tsx
+│   ├── notes/
+│   │   ├── filter/
+│   │   │   ├── @sidebar/
+│   │   │   │   ├── default.tsx
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── SidebarNotes.module.css
+│   │   │   ├── [...slug]/
+│   │   │   │   ├── error.tsx
+│   │   │   │   ├── Notes.client.tsx
+│   │   │   │   └── page.tsx
+│   │   │   ├── layout.tsx
+│   │   │   └── LayoutNotes.module.css
+│   │   └── [id]/
+│   │       ├── error.tsx
+│   │       ├── NoteDetails.client.tsx
+│   │       ├── NoteDetails.module.css
+│   │       └── page.tsx
 │   ├── globals.css
 │   ├── layout.tsx
 │   ├── loading.tsx
+│   ├── not-found.tsx
 │   ├── page.module.css
-│   ├── page.tsx
-│   └── notes/
-│       ├── error.tsx
-│       ├── Notes.client.tsx
-│       ├── page.module.css
-│       ├── page.tsx
-│       └── [id]/
-│           ├── error.tsx
-│           ├── NoteDetails.client.tsx
-│           ├── NoteDetails.module.css
-│           └── page.tsx
+│   └── page.tsx
 ├── components/
 │   ├── ErrorMessage/
 │   │   ├── ErrorMessage.tsx
@@ -97,13 +114,13 @@ A responsive multi-page web application built with Next.js (App Router), TypeScr
 1. Clone the repository:
 
     ```bash
-    git clone [https://github.com/yulikafsd/06-notehub-nextjs.git](https://github.com/yulikafsd/06-notehub-nextjs.git)
+    git clone [https://github.com/yulikafsd/07-routing-nextjs.git](https://github.com/yulikafsd/07-routing-nextjs.git)
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd 06-notehub-nextjs
+    cd 07-routing-nextjs
     ```
 
 3. Install dependencies:
@@ -113,10 +130,10 @@ A responsive multi-page web application built with Next.js (App Router), TypeScr
     ```
 
 4. Set up environment variables:
-   Create a .env file in the root directory and add your TMDB API Token:
+   Create a .env.local file in the root directory and add your NoteHub API Token:
 
     ```text
-     VITE_TMDB_TOKEN=your_tmdb_bearer_token_here
+     NEXT_PUBLIC_NOTEHUB_TOKEN=your_notehub_token_here
     ```
 
 5. Start the development server:
